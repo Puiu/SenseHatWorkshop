@@ -6,6 +6,7 @@ namespace Utils.Models
 {
     public class SenseHatTelemetry
     {
+
         public double Temperature { get; set; }
 
         public double Humidity { get; set; }

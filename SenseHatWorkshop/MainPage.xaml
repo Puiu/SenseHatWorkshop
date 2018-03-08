@@ -41,13 +41,17 @@
 
             <TextBlock Name="txbVersion" Text="{Binding AppVersion}" Grid.Column="0" Grid.Row="0"></TextBlock>
             <TextBlock Name="txbLocalIP" Text="{Binding LocalIpAddress}" Grid.Column="1" Grid.Row="0"></TextBlock>
-            <TextBlock Name="txbExternalIP" Text="{Binding ExternalIpAddress}" Grid.Column="2" Grid.Row="0"></TextBlock>
+            <!--Legg til Textblock column 2 row 0 (Eksternt Ip Adresse-->
 
-            <Button Name="btnMeasureOnce" Content="Run analisys" Command="{Binding DoOneAnalisysCommand}" Grid.Column="0" Grid.Row="1"></Button>
-            <Button Name="btnMeasureForever" Content="Run forever" Command="{Binding AnalyzeForeverCommand}" Grid.Column="1" Grid.Row="1"></Button>
-            <Button Name="btnStopMeasure" Content="Stop" Command="{Binding StopAnalyzeForeverCommand}" Grid.Column="2" Grid.Row="1"></Button>
 
-            <ListBox ItemsSource="{Binding Measurements}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+            <Button Name="btnMeasureOnce" Content="Run analisys" Command="{Binding DoOneMeasurementCommand}" Grid.Column="0" Grid.Row="1"></Button>
+
+            <!--Legg til ny knapp for MeasureContinuouslyCommand Column 1 row 1-->
+            
+
+            <Button Name="btnStopMeasure" Content="Stop" Command="{Binding StopMeasureContinuouslyCommand}" Grid.Column="2" Grid.Row="1"></Button>
+
+            <ListBox ItemsSource="{Binding}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">

@@ -1,10 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Utils.Interfaces;
@@ -22,12 +18,7 @@ namespace SenseHatWorkshop
             set { SetProperty(ref appVersion, value); }
         }
 
-        private ObservableCollection<string> measurements;
-        public ObservableCollection<string> Measurements
-        {
-            get { return measurements; }
-            set { measurements = value; }
-        }
+        
 
         private string localIpAddress;
         public string LocalIpAddress
@@ -51,7 +42,7 @@ namespace SenseHatWorkshop
 
         public MainPageViewModel()
         {
-            Measurements = new ObservableCollection<string>();
+            
         }
 
 
@@ -80,7 +71,7 @@ namespace SenseHatWorkshop
             {
                 logger.LogError("Error Loading data: {0}", ex.ToString());
 
-                Measurements.Add(ex.Message);
+                
             }
 
         }
@@ -100,16 +91,16 @@ namespace SenseHatWorkshop
         }
         #endregion
 
-        #region Do One Analisys Command
-        private ICommand doOneAnalisysCommand;
+        #region Do One Measurement Command
+        private ICommand doOneMeasurementCommand;
 
-        public ICommand DoOneAnalisysCommand
+        public ICommand DoOneMeasurementCommand
         {
-            get { return doOneAnalisysCommand ?? (doOneAnalisysCommand = new CommandHandler(async () => await DoOneAnalisysAsync(), true)); }
+            get { return doOneMeasurementCommand ?? (doOneMeasurementCommand = new CommandHandler(async () => await DoOneMeasurementsAsync(), true)); }
 
         }
 
-        private async Task DoOneAnalisysAsync()
+        private async Task DoOneMeasurementsAsync()
         {
             try
             {
@@ -121,48 +112,26 @@ namespace SenseHatWorkshop
             }
             catch (Exception ex)
             {
-                Measurements.Add(ex.Message);
+                
             }
         }
         #endregion
 
-        #region Analyze Forever Command
-        private ICommand analyzeForeverCommand;
-
-        public ICommand AnalyzeForeverCommand
-        {
-            get { return analyzeForeverCommand ?? (analyzeForeverCommand = new CommandHandler(async () => await AnalyzeForeverAsync(), true)); }
-        }
-
-        private async Task AnalyzeForeverAsync()
-        {
-            try
-            {
-                Measurements.Insert(0, "Starting a new flow...");
-                SetFlow();
-
-                await flow.RunFlowAsync();
-
-                UnsubscribeAndDisposeFlow();
-            }
-            catch (Exception ex)
-            {
-                Measurements.Add(ex.Message);
-            }
-        }
+        #region Measure Continuously Command
+        
         #endregion
 
-        #region Stop Analyze Forever Command 
-        private ICommand stopAnalyzeForeverCommand;
+        #region Stop Measure Continuously Command 
+        private ICommand stopMeasureContinuouslyCommand;
 
-        public ICommand StopAnalyzeForeverCommand
+        public ICommand StopMeasureContinuouslyCommand
         {
-            get { return stopAnalyzeForeverCommand ?? (stopAnalyzeForeverCommand = new CommandHandler(() => StopAnalyzeForever(), true)); }
+            get { return stopMeasureContinuouslyCommand ?? (stopMeasureContinuouslyCommand = new CommandHandler(() => StopMeasureContinuously(), true)); }
         }
 
-        private void StopAnalyzeForever()
+        private void StopMeasureContinuously()
         {
-            Measurements.Insert(0, "Stopping flow...");
+            
             flow.StopFlowRun();
 
             UnsubscribeAndDisposeFlow();
@@ -185,20 +154,10 @@ namespace SenseHatWorkshop
 
         private void Flow_OnMeasurementReady(object sender, MeasurementResultEventArgs<SenseHatTelemetry> e)
         {
-            Measurements.Insert(0, e.Measurement.ToString());
-            CleantMeasurementsList();
+            
+            
         }
 
-        private void CleantMeasurementsList()
-        {
-            var maxRows = 100;
-            if (Measurements.Count > maxRows)
-            {
-                for (int i = maxRows; i < Measurements.Count; i++)
-                {
-                    Measurements.RemoveAt(i);
-                }
-            }
-        }
+        
     }
 }
