@@ -100,12 +100,12 @@ namespace SenseHatWorkshop
         }
         #endregion
 
-        #region Do One Analisys Command
-        private ICommand doOneAnalisysCommand;
+        #region Do One Measurement Command
+        private ICommand doOneMeasurementCommand;
 
-        public ICommand DoOneAnalisysCommand
+        public ICommand DoOneMeasurementCommand
         {
-            get { return doOneAnalisysCommand ?? (doOneAnalisysCommand = new CommandHandler(async () => await DoOneAnalisysAsync(), true)); }
+            get { return doOneMeasurementCommand ?? (doOneMeasurementCommand = new CommandHandler(async () => await DoOneAnalisysAsync(), true)); }
 
         }
 
@@ -126,12 +126,12 @@ namespace SenseHatWorkshop
         }
         #endregion
 
-        #region Analyze Forever Command
-        private ICommand analyzeForeverCommand;
+        #region Measure Continuously Command
+        private ICommand measureContinuouslyCommand;
 
-        public ICommand AnalyzeForeverCommand
+        public ICommand MeasureContinuouslyCommand
         {
-            get { return analyzeForeverCommand ?? (analyzeForeverCommand = new CommandHandler(async () => await AnalyzeForeverAsync(), true)); }
+            get { return measureContinuouslyCommand ?? (measureContinuouslyCommand = new CommandHandler(async () => await AnalyzeForeverAsync(), true)); }
         }
 
         private async Task AnalyzeForeverAsync()
@@ -141,7 +141,7 @@ namespace SenseHatWorkshop
                 Measurements.Insert(0, "Starting a new flow...");
                 SetFlow();
 
-                await flow.RunFlowAsync();
+                await flow.RunMeasurementContinuously();
 
                 UnsubscribeAndDisposeFlow();
             }
@@ -152,18 +152,18 @@ namespace SenseHatWorkshop
         }
         #endregion
 
-        #region Stop Analyze Forever Command 
-        private ICommand stopAnalyzeForeverCommand;
+        #region Stop Measure Continuously Command 
+        private ICommand stopMeasureContinuouslyCommand;
 
-        public ICommand StopAnalyzeForeverCommand
+        public ICommand StopMeasureContinuouslyCommand
         {
-            get { return stopAnalyzeForeverCommand ?? (stopAnalyzeForeverCommand = new CommandHandler(() => StopAnalyzeForever(), true)); }
+            get { return stopMeasureContinuouslyCommand ?? (stopMeasureContinuouslyCommand = new CommandHandler(() => StopMeasureContinuously(), true)); }
         }
 
-        private void StopAnalyzeForever()
+        private void StopMeasureContinuously()
         {
             Measurements.Insert(0, "Stopping flow...");
-            flow.StopFlowRun();
+            flow.StopMeasurementRun();
 
             UnsubscribeAndDisposeFlow();
         }

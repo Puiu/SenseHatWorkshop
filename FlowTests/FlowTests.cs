@@ -54,7 +54,7 @@ namespace FlowTests
             Flow<SomeMeasure> flow = GetFlowWithCloudHandlerException();
 
 
-            var tsk = flow.RunFlowAsync();
+            var tsk = flow.RunMeasurementContinuously();
 
             await Task.Delay(1000);
 
@@ -66,7 +66,7 @@ namespace FlowTests
         {
             Flow<SomeMeasure> flow = GetFlowWithCloudHandlerException();
 
-            flow.StopFlowRun();
+            flow.StopMeasurementRun();
 
             Assert.IsTrue(flow.CancellationTokenSource.IsCancellationRequested);
         }

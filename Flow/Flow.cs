@@ -43,7 +43,7 @@ namespace Flow
 
 
 
-        public async Task RunFlowAsync()
+        public async Task RunMeasurementContinuously()
         {
 
             _logger.LogInformation("Starting Flow<{0}>", typeof(T).FullName);
@@ -92,7 +92,7 @@ namespace Flow
             return measure;
         }
 
-        public void StopFlowRun()
+        public void StopMeasurementRun()
         {
 
             _logger.LogDebug("Stop Flow triggered!");
